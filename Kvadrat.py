@@ -3,10 +3,11 @@ import numpy as np
 
 
 class Uravnenie:
-    def __init__(self,a,b,c):
+    def __init__(self,a,b,c,d):
         self.a = a
         self.b = b
         self.c = c
+        self.d = d
 
     def discriminant(self):
         disc = (self.b ** 2) - (4 * self.a * self.c)
@@ -42,7 +43,7 @@ class Uravnenie:
         plt.grid()
         plt.show() 
 
-class Rh(Uravnenie):
+class Proizvod(Uravnenie):
     def __init__(self, a, b, c):
         super().__init__(a, b, c)
 
@@ -64,10 +65,34 @@ class Rh(Uravnenie):
     def __del__(self):                     
         print('!')
 
+class Integral(Uravnenie):
+    def __init__(self, a, b, c, d):
+        super().__init__(a, b, c, d)
+
+    def func(self, x):
+        y = ((self.a * (x ** 3))/3) + ((self.b *(x ** 2))/2) + (self.c * x) + self.d
+        return y
+
+    def paint(self):
+        xmin = -20.0
+        xmax = 20.0
+        count = 2000000
+
+        xlist = np.linspace(xmin, xmax, count)
+        ylist = [self.func(x) for x in xlist]
+        plt.plot(xlist, ylist, color = 'yellow')
+        plt.grid()
+        plt.show()
+
+    def __del__(self):                     
+        print('!')
+
 def lf():
-    u = Uravnenie(1,-2,1)
+    u = Uravnenie(1,-2,1,0)
     u.cor()
     u.paint()
-    r = Rh(1,-2,1)
+    r = Proizvod(1,-2,1,0)
     r.paint()
+    i = Integral(1,-2,1,0)
+    i.paint()
 lf()
